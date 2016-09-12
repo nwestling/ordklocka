@@ -20,8 +20,20 @@ uint16_t mask[11];
 
   //WORDCLOCK COLORS
   int wordred   = 80;
-  int wordblue  = 255;
   int wordgreen = 160;
+  int wordblue  = 132;
+
+  int coloursRGB[3];
+
+  // 80, 160, 132 works quite well, blue-green-ish
+  // 130,75,75 night colour red/grey
+  // 160,160,160 grey stylish
+  // 50,69,62 dark green/blue night colour
+  // 242,240,136 yellow/champagne 
+
+  #define red 0
+  #define green 1
+  #define blue 2
 
   //CELEBRATION COLORS
   int celebred   = 200;
@@ -55,7 +67,7 @@ uint16_t mask[11];
 #define hourTRE          mask[6]  |= 0x3800
 #define hourFYRA         mask[6]  |= 0x3C0
 #define hourFEM          mask[4]  |= 0x380
-#define hourSEX          mask[5]  |= 0x700
+#define hourSEX          mask[5]  |= 0x7000
 #define hourSJU          mask[9]  |= 0xE000
 #define hourATTA         mask[8]  |= 0x780
 #define hourNIO          mask[5]  |= 0x700
@@ -140,6 +152,15 @@ void setup() {
 
 
 void applyMask() {
+   coloursRGB[red] = wordred;
+   coloursRGB[green] = wordgreen;
+   coloursRGB[blue] = wordblue;
+   
+   if ((mytimehr <= 6) && (mytimehr >= 23)){ //dim at night
+    coloursRGB[red]=coloursRGB[red]/2;
+    coloursRGB[green]=coloursRGB[green]/2;
+    coloursRGB[blue]=coloursRGB[blue]/2;
+    }
 
    for (byte row = 0; row < 10; row++) 
    {
